@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html ng-app="todoApp"> <!-- FoA : You have to name your app -->
+<head>
+	<!-- <title ng-binding="todo.user">{{todo.user}} List</title> s interesting, you can add a data binding before declare angular's library --> 
+	
+	<title ng-controller="HeadCtrl">Lista de {{titulo}}</title>
+	<meta charset="utf-8">
+	<!-- Add the libraries to create your basic app -->
+	<!-- in this case: AngularJs and Bootstrap -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
+	<script src="bower_components/angular/angular.min.js"></script>
+	
+	<!-- Angular Material dependencies -->
+	<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+	<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+  	<script src="bower_components/angular-aria/angular-aria.min.js"></script>  
+  	<script src="bower_components/angular-messages/angular-messages.min.js"></script>
+  	<script src="bower_components/angular-material/angular-material.min.js"></script>
+  		
+	
+	<!-- Llamamos la app -->
+	<script src="src/app/app.js"></script>
+    <link rel="stylesheet" href="src/css/main.css">
+</head>
+<body ng-controller="ToDoCtrl" ng-cloak> <!-- Here we put What Controller will manage this view -->
+<div layout="row" layout-xs="column">
+  <div flex>
+    <md-content class="md-padding" layout-xs="column" layout="row" layout-align="center">
+        <div flex-xs="" flex-gt-xs="50" layout="column">
+          <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch="">
+            <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">TO-DO LIST</span>
+                <span class="md-subhead">{{todo.user}}'s List</span>
+              </md-card-title-text>           
+            </md-card-title>
+            <md-card-content>
+              <p>
+                Organizing your tasks with a list can make everything much more manageable and make you feel grounded. Seeing a clear outline of your completed and uncompleted tasks will help you feel organized and stay mentally focused.
+              </p>
+            
+              <div layout="row">
+                <div flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>What I have to do next?</label>
+                        <input ng-model="actionText">
+                    </md-input-container>
+                </div>
+                <div flex="20">
+                    <md-button class="md-raised md-primary" ng-click="addNewItem(actionText)">Add</md-button>
+                </div>
+              </div>
+                
+              <!-- Cabecera tareas
+                <div layout="row">
+                    <div flex>
+                    Task Description
+                    </div> 
+                    <div flex="20">
+                    Done
+                    </div>
+                </div>
+                -->
+                <!-- Listar tareas -->
+                <div layout="row" ng-repeat="item in todo.items | checkedItems:showComplete | orderBy:'action'">
+                    <div flex>
+                    {{item.action}}
+                    </div> 
+                    <div flex="20">
+                        <md-checkbox md-no-ink="" aria-label="Checkbox No Ink" ng-model="item.done" class="md-primary">
+                        </md-checkbox>
+                    </div>
+                </div>
+              <br/>
+              <br/>
+              <md-switch ng-model="showComplete" aria-label="complete">
+                Show Complete Tasks
+              </md-switch>
+              <p ng-hide="incompleteCount() == 0">
+                Pending tasks: {{incompleteCount()}} 
+                <i ng-class="warningLevelIco()">done all</i>          
+              </p>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+              
+            </md-card-actions>
+          </md-card>
+        </div>
+    </md-content>
+  </div>
+</div>
+</body>
+</html>
